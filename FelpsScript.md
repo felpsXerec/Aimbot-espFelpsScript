@@ -235,7 +235,9 @@ local _G = {
     FOVColor = Color3.fromRGB(255, 0, 150),
     ESPBoxColor = Color3.fromRGB(255, 255, 255),
     ESPNameColor = Color3.fromRGB(255, 255, 255),
-    TracerColor = Color3.fromRGB(255, 255, 255)
+    TracerColor = Color3.fromRGB(255, 255, 255),
+    HitboxEnabled = false,
+    Noclip = false
 }
 
 -- ESP System
@@ -324,6 +326,7 @@ RunService:BindToRenderStep("PererelpsUpdate", 200, function()
     FOVCircle.Position = UserInputService:GetMouseLocation()
     FOVCircle.Color = _G.FOVColor
 
+    -- Aimbot
     if _G.AimbotEnabled and UserInputService:IsMouseButtonPressed(Enum.UserInputType.MouseButton2) then
         local target = nil
         local dist = _G.FovRadius
@@ -343,6 +346,41 @@ RunService:BindToRenderStep("PererelpsUpdate", 200, function()
         if target then 
             local targetCFrame = CFrame.lookAt(Camera.CFrame.Position, target.Position)
             Camera.CFrame = Camera.CFrame:Lerp(targetCFrame, _G.AimbotSmooth)
+        end
+    end
+    
+    -- Hitbox Expansion
+    for _, player in pairs(Players:GetPlayers()) do
+        if player ~= LocalPlayer and player.Character then
+            local head = player.Character:FindFirstChild("Head")
+            if head then
+                if _G.HitboxEnabled then
+                    if _G.TeamCheck and player.Team == LocalPlayer.Team then
+                        head.Size = Vector3.new(2, 1, 1)
+                        head.Transparency = 0
+                    else
+                        head.Size = Vector3.new(5, 5, 5)
+                        head.Transparency = 0.5
+                        head.CanCollide = false
+                    end
+                else
+                    head.Size = Vector3.new(2, 1, 1)
+                    head.Transparency = 0
+                    head.CanCollide = true
+                end
+            end
+        end
+    end
+    
+    -- Noclip
+    if _G.Noclip then
+        local character = LocalPlayer.Character
+        if character then
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
         end
     end
 
@@ -548,12 +586,6 @@ spawn(function()
 end)
 
 -- Border Effect
-local BorderFrame = Instance.new("Frame")
-BorderFrame.Size = UDim2.new(1, 2, 1, 2)
-BorderFrame.Position = UDim2.new(0, -1, 0, -1)
-BorderFrame.BackgroundTransparency = 1
-BorderFrame.Parent = MainFrame
-
 local BorderStroke = Instance.new("UIStroke")
 BorderStroke.Color = Color3.fromRGB(255, 0, 150)
 BorderStroke.Thickness = 2
@@ -1244,7 +1276,8 @@ end
 -- Criar Tabs
 local AimbotTab = CreateTab("AIMBOT", "🎯")
 local ESPTab = CreateTab("ESP", "👁️")
-local SettingsTab = CreateTab("CONFIG", "⚙️")
+local MiscTab = CreateTab("MISC", "⚙️")
+local SettingsTab = CreateTab("CONFIG", "🔧")
 
 -- Aimbot Controls
 CreateToggle(AimbotTab, "Ativar Aimbot", false, function(v) _G.AimbotEnabled = v end)
@@ -1261,15 +1294,49 @@ CreateToggle(ESPTab, "Distance", false, function(v) _G.ESPDistance = v end)
 CreateToggle(ESPTab, "Health Bar", false, function(v) _G.ESPHealthBar = v end)
 CreateToggle(ESPTab, "Tracers", false, function(v) _G.ESPTracers = v end)
 
+-- Misc Controls
+CreateToggle(MiscTab, "🎯 Hitbox Expander (Level 5)", false, function(v) 
+    _G.HitboxEnabled = v 
+    if not v then
+        -- Restaurar hitboxes ao desativar
+        for _, player in pairs(Players:GetPlayers()) do
+            if player ~= LocalPlayer and player.Character then
+                local head = player.Character:FindFirstChild("Head")
+                if head then
+                    head.Size = Vector3.new(2, 1, 1)
+                    head.Transparency = 0
+                    head.CanCollide = true
+                end
+            end
+        end
+    end
+end)
+
+CreateToggle(MiscTab, "👻 Atravessar Paredes (Noclip)", false, function(v) 
+    _G.Noclip = v 
+    if not v then
+        -- Restaurar colisões ao desativar
+        local character = LocalPlayer.Character
+        if character then
+            for _, part in pairs(character:GetDescendants()) do
+                if part:IsA("BasePart") and (part.Name == "HumanoidRootPart" or part.Name == "Torso" or part.Name == "UpperTorso" or part.Name == "LowerTorso") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
+end)
+
 -- Settings
 local InfoLabel = Instance.new("TextLabel")
-InfoLabel.Size = UDim2.new(1, -10, 0, 60)
-InfoLabel.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-InfoLabel.Text = "💎 PERERELPS VIP\n\nAimbot: Segure botão direito\nMenu: Tecla K para abrir/fechar"
-InfoLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-InfoLabel.TextSize = 12
+InfoLabel.Size = UDim2.new(1, -10, 0, 80)
+InfoLabel.BackgroundColor3 = Color3.fromRGB(22, 22, 30)
+InfoLabel.Text = "💎 PERERELPS VIP\n\n🎯 Aimbot: Segure botão direito\n⌨️ Menu: Tecla K para abrir/fechar\n🎯 Hitbox: Level 5 (5x5x5)\n👻 Noclip: Atravessa todas as paredes"
+InfoLabel.TextColor3 = Color3.fromRGB(220, 220, 230)
+InfoLabel.TextSize = 11
 InfoLabel.Font = Enum.Font.Gotham
 InfoLabel.TextWrapped = true
+InfoLabel.TextYAlignment = Enum.TextYAlignment.Top
 InfoLabel.Parent = SettingsTab
 
 local InfoCorner = Instance.new("UICorner")
