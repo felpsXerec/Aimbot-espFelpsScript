@@ -7,7 +7,7 @@ local TweenService = game:GetService("TweenService")
 local Camera = workspace.CurrentCamera
 
 -- KEY SYSTEM
-local CORRECT_KEY = "Lobozkssk"
+local CORRECT_KEY = "Lobozkssk2"
 local keyEntered = false
 
 -- CRIAR UI DE KEY
