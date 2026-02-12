@@ -1323,24 +1323,56 @@ UserInputService.InputBegan:Connect(function(input, gameProcessed)
     if not gameProcessed and input.KeyCode == Enum.KeyCode.K then
         MainFrame.Visible = not MainFrame.Visible
         
-        -- Animação suave
+        -- Se está mostrando, reseta a opacidade
         if MainFrame.Visible then
-            MainFrame.BackgroundTransparency = 1
-            TweenService:Create(MainFrame, TweenInfo.new(0.3), {
-                BackgroundTransparency = 0
-            }):Play()
+            -- Resetar todas as transparências imediatamente
+            MainFrame.BackgroundTransparency = 0
             
             for _, child in pairs(MainFrame:GetDescendants()) do
                 if child:IsA("TextLabel") or child:IsA("TextButton") then
-                    child.TextTransparency = 1
-                    TweenService:Create(child, TweenInfo.new(0.3), {
-                        TextTransparency = 0
-                    }):Play()
-                elseif child:IsA("Frame") and child ~= MainFrame then
-                    child.BackgroundTransparency = 1
-                    TweenService:Create(child, TweenInfo.new(0.3), {
-                        BackgroundTransparency = 0
-                    }):Play()
+                    child.TextTransparency = 0
+                    child.BackgroundTransparency = child.Name == "Close" and 0 or (child:IsA("TextLabel") and 1 or child.BackgroundTransparency)
+                elseif child:IsA("Frame") then
+                    -- Restaurar transparências originais dos frames
+                    if child.Name == "TopBarBg" or child.Name == "TopBarBottom" then
+                        child.BackgroundTransparency = 0
+                    elseif child.Name == "TabContainer" or child.Name == "IconContainer" then
+                        child.BackgroundTransparency = 0
+                    elseif child.Name == "Shine" then
+                        child.BackgroundTransparency = 0.7
+                    elseif child.Name == "TopBar" or child.Name == "ContentContainer" or child.Name == "TitleContainer" or child.Name == "BorderFrame" then
+                        child.BackgroundTransparency = 1
+                    elseif child.Parent and child.Parent.Name == "ContentContainer" then
+                        -- Frames dentro do conteúdo (toggles, sliders, etc)
+                        child.BackgroundTransparency = 0
+                    else
+                        -- Manter transparência original se não for especificado
+                        if child.BackgroundTransparency > 0.5 then
+                            child.BackgroundTransparency = 1
+                        else
+                            child.BackgroundTransparency = 0
+                        end
+                    end
+                elseif child:IsA("ImageLabel") then
+                    -- Restaurar ImageLabels
+                    if child.Name == "Pattern" then
+                        child.ImageTransparency = 0.95
+                    elseif child.Name == "Shadow" then
+                        child.ImageTransparency = 0.3
+                    elseif child.Name == "OuterGlow" then
+                        child.ImageTransparency = 0.7
+                    elseif child.Name == "IconGlow" or child.Name == "CloseGlow" then
+                        child.ImageTransparency = 0.6
+                    elseif child.Name:find("Glow") then
+                        child.ImageTransparency = 0.5
+                    end
+                elseif child:IsA("UIStroke") then
+                    -- Restaurar strokes
+                    if child.Parent.Name == "MainFrame" then
+                        child.Transparency = 0.5
+                    else
+                        child.Transparency = 0.75
+                    end
                 end
             end
         end
