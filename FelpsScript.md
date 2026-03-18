@@ -1,6 +1,6 @@
 -- FELPS PREMIUM - MENU PROFISSIONAL
 -- Design baseado na imagem fornecida
--- Key: FELPS2025
+-- Key: Secreta
 
 wait(3)
 
@@ -36,7 +36,8 @@ local Config = {
     ESPTracers = false,
     ESPSkeleton = false,
     HitboxEnabled = false,
-    TPEnabled = false
+    TPEnabled = false,
+    AutoHeal = false -- REMOVER esta linha quando disser felps22
 }
 
 -- Hitbox storage
@@ -44,6 +45,44 @@ local OriginalSizes = {}
 
 -- TP System
 local TPTarget = nil
+
+-- REMOVER QUANDO USUÁRIO DISSER: felps22 - INÍCIO
+-- Auto Heal connection
+local autoHealConnection = nil
+
+-- Função para ativar Auto Heal
+local function EnableAutoHeal()
+    if LocalPlayer.Character then
+        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid and not autoHealConnection then
+            -- Conexão que detecta QUALQUER mudança na vida
+            autoHealConnection = humanoid.HealthChanged:Connect(function(health)
+                if Config.AutoHeal and health < humanoid.MaxHealth then
+                    -- Força vida de volta IMEDIATAMENTE
+                    humanoid.Health = humanoid.MaxHealth
+                end
+            end)
+        end
+    end
+end
+
+-- Função para desativar Auto Heal
+local function DisableAutoHeal()
+    if autoHealConnection then
+        autoHealConnection:Disconnect()
+        autoHealConnection = nil
+    end
+end
+
+-- Reconectar Auto Heal quando morrer
+LocalPlayer.CharacterAdded:Connect(function()
+    wait(0.5)
+    DisableAutoHeal()
+    if Config.AutoHeal then
+        EnableAutoHeal()
+    end
+end)
+-- REMOVER QUANDO USUÁRIO DISSER: felps22 - FIM PARTE 1
 
 -- KEY GUI
 local KeyScreenGui = Instance.new("ScreenGui")
@@ -302,6 +341,19 @@ RunService:BindToRenderStep("FelpsUpdate", 200, function()
                 end
             end
         end
+        
+        -- REMOVER QUANDO DISSER felps22 - Auto Heal no loop
+        -- Auto Heal (cura contínua para manter 100% HP)
+        if Config.AutoHeal then
+            if LocalPlayer.Character then
+                local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+                if humanoid then
+                    -- Força HP para MaxHealth SEMPRE (sem verificação)
+                    humanoid.Health = humanoid.MaxHealth
+                end
+            end
+        end
+        -- FIM - Remover Auto Heal do loop
 
         -- ESP UPDATE (OTIMIZADO)
         if Config.ESPEnabled then
@@ -623,6 +675,12 @@ DestroyBtn.MouseButton1Click:Connect(function()
     Config.ESPSkeleton = false
     Config.HitboxEnabled = false
     Config.TPEnabled = false
+    Config.AutoHeal = false -- REMOVER ESTA LINHA quando disser felps22
+    
+    -- REMOVER quando disser felps22
+    -- Desconectar Auto Heal
+    DisableAutoHeal()
+    -- FIM - remover
     
     -- Restaurar hitboxes
     for h, originalSize in pairs(OriginalSizes) do
@@ -876,10 +934,7 @@ Toggle(s3, "Tracers", "ESPTracers", 245)
 Toggle(s3, "Skeleton", "ESPSkeleton", 285)
 
 -- TELEPORT Section (movida para não sobrepor)
-local s4 = Section("TELEPORT", 225, 110, 215, 225)
-
--- TELEPORT Section (movida para não sobrepor)
-local s4 = Section("TELEPORT", 225, 110, 215, 225)
+local s4 = Section("TELEPORT", 225, 110, 215, 310)
 
 -- TP System UI
 local tpLabel = Instance.new("TextLabel")
@@ -1142,6 +1197,140 @@ tpToggle.MouseButton1Click:Connect(function()
     end
 end)
 
+-- RECUPERAR VIDA CHEIA (SEM RESET)
+-- REMOVER QUANDO USUÁRIO DISSER: felps22
+local healButton = Instance.new("TextButton")
+healButton.Size = UDim2.new(1, -20, 0, 35)
+healButton.Position = UDim2.new(0, 10, 0, 210)
+healButton.BackgroundColor3 = Color3.fromRGB(50, 200, 100)
+healButton.Text = "💚 HEAL NOW"
+healButton.TextColor3 = Color3.new(1, 1, 1)
+healButton.TextSize = 12
+healButton.Font = Enum.Font.GothamBold
+healButton.Parent = s4
+
+local healBtnCorner = Instance.new("UICorner")
+healBtnCorner.CornerRadius = UDim.new(0, 6)
+healBtnCorner.Parent = healButton
+
+-- Sistema de cura instantânea
+healButton.MouseButton1Click:Connect(function()
+    if LocalPlayer.Character then
+        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        
+        if humanoid then
+            -- Salvar vida atual
+            local oldHealth = humanoid.Health
+            
+            -- Restaurar vida para 100% MÚLTIPLAS VEZES (força o servidor aceitar)
+            for i = 1, 5 do
+                humanoid.Health = humanoid.MaxHealth
+                wait(0.05)
+            end
+            
+            -- Feedback visual (verde brilhante)
+            TweenService:Create(healButton, TweenInfo.new(0.1), {
+                BackgroundColor3 = Color3.fromRGB(100, 255, 150)
+            }):Play()
+            
+            wait(0.2)
+            
+            TweenService:Create(healButton, TweenInfo.new(0.2), {
+                BackgroundColor3 = Color3.fromRGB(50, 200, 100)
+            }):Play()
+            
+            -- Notificação
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "💚 HEALED";
+                Text = string.format("HP: %.0f → %.0f", oldHealth, humanoid.MaxHealth);
+                Duration = 2;
+            })
+        end
+    end
+end)
+
+-- AUTO HEAL (CURA CONTÍNUA)
+local autoHealContainer = Instance.new("Frame")
+autoHealContainer.Size = UDim2.new(1, -20, 0, 35)
+autoHealContainer.Position = UDim2.new(0, 10, 0, 255)
+autoHealContainer.BackgroundTransparency = 1
+autoHealContainer.Parent = s4
+
+local autoHealLabel = Instance.new("TextLabel")
+autoHealLabel.Size = UDim2.new(1, -50, 1, 0)
+autoHealLabel.BackgroundTransparency = 1
+autoHealLabel.Text = "Auto Heal (Keep 100%)"
+autoHealLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+autoHealLabel.TextSize = 11
+autoHealLabel.Font = Enum.Font.Gotham
+autoHealLabel.TextXAlignment = Enum.TextXAlignment.Left
+autoHealLabel.Parent = autoHealContainer
+
+-- Toggle Auto Heal
+local autoHealToggle = Instance.new("TextButton")
+autoHealToggle.Size = UDim2.new(0, 40, 0, 20)
+autoHealToggle.Position = UDim2.new(1, -45, 0.5, -10)
+autoHealToggle.BackgroundColor3 = Color3.fromRGB(60, 60, 63)
+autoHealToggle.Text = ""
+autoHealToggle.Parent = autoHealContainer
+
+local autoHealCorner = Instance.new("UICorner")
+autoHealCorner.CornerRadius = UDim.new(1, 0)
+autoHealCorner.Parent = autoHealToggle
+
+local autoHealDot = Instance.new("Frame")
+autoHealDot.Size = UDim2.new(0, 16, 0, 16)
+autoHealDot.Position = UDim2.new(0, 2, 0.5, -8)
+autoHealDot.BackgroundColor3 = Color3.new(1, 1, 1)
+autoHealDot.BorderSizePixel = 0
+autoHealDot.Parent = autoHealToggle
+
+local autoHealDotCorner = Instance.new("UICorner")
+autoHealDotCorner.CornerRadius = UDim.new(1, 0)
+autoHealDotCorner.Parent = autoHealDot
+
+-- Toggle Auto Heal
+autoHealToggle.MouseButton1Click:Connect(function()
+    Config.AutoHeal = not Config.AutoHeal
+    
+    if Config.AutoHeal then
+        -- Ativar Auto Heal
+        EnableAutoHeal()
+        
+        TweenService:Create(autoHealToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 200, 100)}):Play()
+        TweenService:Create(autoHealDot, TweenInfo.new(0.2), {Position = UDim2.new(1, -18, 0.5, -8)}):Play()
+        
+        -- Cura imediata ao ativar
+        if LocalPlayer.Character then
+            local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+            if humanoid then
+                humanoid.Health = humanoid.MaxHealth
+            end
+        end
+        
+        -- Notificação
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "💚 AUTO HEAL ON";
+            Text = "HP will stay at 100%";
+            Duration = 2;
+        })
+    else
+        -- Desativar Auto Heal
+        DisableAutoHeal()
+        
+        TweenService:Create(autoHealToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 60, 63)}):Play()
+        TweenService:Create(autoHealDot, TweenInfo.new(0.2), {Position = UDim2.new(0, 2, 0.5, -8)}):Play()
+        
+        -- Notificação
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "💚 AUTO HEAL OFF";
+            Text = "Manual heal only";
+            Duration = 2;
+        })
+    end
+end)
+-- FIM DO CÓDIGO DE HEAL - REMOVER ATÉ AQUI QUANDO DISSER felps22
+
 -- Inicializar lista
 updatePlayerList()
 
@@ -1193,4 +1382,4 @@ game.StarterGui:SetCore("SendNotification", {
 
 end
 
-print("Script loaded! Key: Secreta ")
+print("Script loaded! Key: FELPS2025")
