@@ -1,4 +1,4 @@
--- FELPS PREMIUM - MENU PROFISSIONAL
+-- PHANTOM HUB - PROFESSIONAL MENU
 -- Design baseado na imagem fornecida
 -- Key: Secreta
 
@@ -15,11 +15,11 @@ local PlayerGui = LocalPlayer:WaitForChild("PlayerGui")
 wait(1)
 
 print("==========================================")
-print("FELPS SCRIPT - LOADING...")
+print("PHANTOM HUB - LOADING...")
 print("==========================================")
 
 -- KEY SYSTEM
-local CORRECT_KEY = "felpvip4429844839929483"
+local CORRECT_KEY = "PhantomFelpVip225566"
 
 -- CONFIGURAÇÕES
 local Config = {
@@ -36,8 +36,7 @@ local Config = {
     ESPTracers = false,
     ESPSkeleton = false,
     HitboxEnabled = false,
-    TPEnabled = false,
-    AutoHeal = false -- REMOVER esta linha quando disser felps22
+    TPEnabled = false
 }
 
 -- Hitbox storage
@@ -46,54 +45,17 @@ local OriginalSizes = {}
 -- TP System
 local TPTarget = nil
 
--- REMOVER QUANDO USUÁRIO DISSER: felps22 - INÍCIO
--- Auto Heal connection
-local autoHealConnection = nil
-
--- Função para ativar Auto Heal
-local function EnableAutoHeal()
-    if LocalPlayer.Character then
-        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-        if humanoid and not autoHealConnection then
-            -- Conexão que detecta QUALQUER mudança na vida
-            autoHealConnection = humanoid.HealthChanged:Connect(function(health)
-                if Config.AutoHeal and health < humanoid.MaxHealth then
-                    -- Força vida de volta IMEDIATAMENTE
-                    humanoid.Health = humanoid.MaxHealth
-                end
-            end)
-        end
-    end
-end
-
--- Função para desativar Auto Heal
-local function DisableAutoHeal()
-    if autoHealConnection then
-        autoHealConnection:Disconnect()
-        autoHealConnection = nil
-    end
-end
-
--- Reconectar Auto Heal quando morrer
-LocalPlayer.CharacterAdded:Connect(function()
-    wait(0.5)
-    DisableAutoHeal()
-    if Config.AutoHeal then
-        EnableAutoHeal()
-    end
-end)
--- REMOVER QUANDO USUÁRIO DISSER: felps22 - FIM PARTE 1
 
 -- KEY GUI
 local KeyScreenGui = Instance.new("ScreenGui")
-KeyScreenGui.Name = "FelpsKeySystem"
+KeyScreenGui.Name = "PhantomKeySystem"
 KeyScreenGui.ResetOnSpawn = false
 KeyScreenGui.Parent = PlayerGui
 
 local KeyFrame = Instance.new("Frame")
-KeyFrame.Size = UDim2.new(0, 400, 0, 250)
-KeyFrame.Position = UDim2.new(0.5, -200, 0.5, -125)
-KeyFrame.BackgroundColor3 = Color3.fromRGB(20, 20, 25)
+KeyFrame.Size = UDim2.new(0, 400, 0, 280)
+KeyFrame.Position = UDim2.new(0.5, -200, 0.5, -140)
+KeyFrame.BackgroundColor3 = Color3.fromRGB(15, 10, 25)
 KeyFrame.BorderSizePixel = 0
 KeyFrame.Parent = KeyScreenGui
 
@@ -103,7 +65,7 @@ KeyCorner.Parent = KeyFrame
 
 local KeyTopBar = Instance.new("Frame")
 KeyTopBar.Size = UDim2.new(1, 0, 0, 50)
-KeyTopBar.BackgroundColor3 = Color3.fromRGB(255, 0, 150)
+KeyTopBar.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
 KeyTopBar.BorderSizePixel = 0
 KeyTopBar.Parent = KeyFrame
 
@@ -114,36 +76,51 @@ KeyTopCorner.Parent = KeyTopBar
 local KeyTopBottom = Instance.new("Frame")
 KeyTopBottom.Size = UDim2.new(1, 0, 0, 12)
 KeyTopBottom.Position = UDim2.new(0, 0, 1, -12)
-KeyTopBottom.BackgroundColor3 = Color3.fromRGB(255, 0, 150)
+KeyTopBottom.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
 KeyTopBottom.BorderSizePixel = 0
 KeyTopBottom.Parent = KeyTopBar
 
 local KeyTitle = Instance.new("TextLabel")
 KeyTitle.Size = UDim2.new(1, 0, 1, 0)
 KeyTitle.BackgroundTransparency = 1
-KeyTitle.Text = "🛑 ACESSO RESTRITO 🛑"
+KeyTitle.Text = "☠️ ACCESS RESTRICTED ☠️"
 KeyTitle.TextColor3 = Color3.new(1, 1, 1)
 KeyTitle.TextSize = 20
 KeyTitle.Font = Enum.Font.GothamBold
 KeyTitle.Parent = KeyTopBar
 
+-- Phantom Hub Icon (SUBSTITUA O ID PELO SEU!)
+-- Como obter seu ID: Veja o arquivo PHANTOM_HUB_ICON_SETUP.txt
+-- 1. Faça upload da imagem em create.roblox.com
+-- 2. Pegue o ID da URL
+-- 3. Substitua o número abaixo
+local PhantomIcon = Instance.new("ImageLabel")
+PhantomIcon.Size = UDim2.new(0, 70, 0, 70)
+PhantomIcon.Position = UDim2.new(0.5, -35, 0, 65)
+PhantomIcon.BackgroundTransparency = 1
+PhantomIcon.Image = "rbxassetid://89528230598819" -- ← MUDE ESTE NÚMERO!
+PhantomIcon.Parent = KeyFrame
+
 local KeySubtitle = Instance.new("TextLabel")
 KeySubtitle.Size = UDim2.new(1, -40, 0, 30)
-KeySubtitle.Position = UDim2.new(0, 20, 0, 60)
+KeySubtitle.Position = UDim2.new(0, 20, 0, 145)
 KeySubtitle.BackgroundTransparency = 1
-KeySubtitle.Text = "💎 FELPS PREMIUM EDITION 💎"
-KeySubtitle.TextColor3 = Color3.fromRGB(200, 200, 200)
-KeySubtitle.TextSize = 16
+KeySubtitle.Text = "💀 PHANTOM HUB 💀"
+KeySubtitle.TextColor3 = Color3.fromRGB(160, 80, 240)
+KeySubtitle.TextSize = 18
 KeySubtitle.Font = Enum.Font.GothamBold
 KeySubtitle.Parent = KeyFrame
 
 local KeyInput = Instance.new("TextBox")
 KeyInput.Size = UDim2.new(1, -40, 0, 40)
-KeyInput.Position = UDim2.new(0, 20, 0, 130)
-KeyInput.BackgroundColor3 = Color3.fromRGB(30, 30, 35)
-KeyInput.PlaceholderText = "Digite a chave..."
+KeyInput.Position = UDim2.new(0, 20, 0, 190)
+KeyInput.BackgroundColor3 = Color3.fromRGB(25, 15, 40)
+KeyInput.BorderSizePixel = 1
+KeyInput.BorderColor3 = Color3.fromRGB(130, 50, 200)
+KeyInput.PlaceholderText = "Enter Key..."
 KeyInput.Text = ""
 KeyInput.TextColor3 = Color3.new(1, 1, 1)
+KeyInput.PlaceholderColor3 = Color3.fromRGB(100, 50, 150)
 KeyInput.TextSize = 14
 KeyInput.Font = Enum.Font.Gotham
 KeyInput.Parent = KeyFrame
@@ -154,9 +131,9 @@ KeyInputCorner.Parent = KeyInput
 
 local SubmitButton = Instance.new("TextButton")
 SubmitButton.Size = UDim2.new(1, -40, 0, 40)
-SubmitButton.Position = UDim2.new(0, 20, 0, 185)
-SubmitButton.BackgroundColor3 = Color3.fromRGB(50, 200, 50)
-SubmitButton.Text = "✓ VALIDAR"
+SubmitButton.Position = UDim2.new(0, 20, 0, 235)
+SubmitButton.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
+SubmitButton.Text = "✓ VERIFY ACCESS"
 SubmitButton.TextColor3 = Color3.new(1, 1, 1)
 SubmitButton.TextSize = 15
 SubmitButton.Font = Enum.Font.GothamBold
@@ -245,6 +222,13 @@ Players.PlayerRemoving:Connect(function(p)
     end 
 end)
 
+-- Inicializar ESP para players existentes
+for _, player in pairs(Players:GetPlayers()) do
+    if player ~= LocalPlayer then
+        PlayerVisuals[player] = CreateESP(player)
+    end
+end
+
 local FOVCircle = Drawing.new("Circle")
 FOVCircle.Thickness = 2
 FOVCircle.Filled = false
@@ -261,7 +245,7 @@ RunService:BindToRenderStep("FelpsUpdate", 200, function()
         if Config.AimbotEnabled and Config.FovVisible then
             FOVCircle.Radius = Config.FovRadius
             FOVCircle.Position = UserInputService:GetMouseLocation()
-            FOVCircle.Color = Color3.fromRGB(255, 50, 100)
+            FOVCircle.Color = Color3.fromRGB(130, 50, 200)
             FOVCircle.Visible = true
         else
             FOVCircle.Visible = false
@@ -337,23 +321,20 @@ RunService:BindToRenderStep("FelpsUpdate", 200, function()
                 local myRoot = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
                 
                 if targetRoot and myRoot then
-                    myRoot.CFrame = targetRoot.CFrame * CFrame.new(0, 0, 3) -- TP atrás do player
+                    myRoot.CFrame = targetRoot.CFrame * CFrame.new(0, 0, TPDistance)
                 end
             end
         end
         
-        -- REMOVER QUANDO DISSER felps22 - Auto Heal no loop
-        -- Auto Heal (cura contínua para manter 100% HP)
+        -- Auto Heal (loop forçado para manter HP em 100%)
         if Config.AutoHeal then
             if LocalPlayer.Character then
                 local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
                 if humanoid then
-                    -- Força HP para MaxHealth SEMPRE (sem verificação)
                     humanoid.Health = humanoid.MaxHealth
                 end
             end
         end
-        -- FIM - Remover Auto Heal do loop
 
         -- ESP UPDATE (OTIMIZADO)
         if Config.ESPEnabled then
@@ -542,7 +523,7 @@ KeyInput.FocusLost:Connect(function(enter) if enter then validateKey() end end)
 function loadMainMenu()
     
 local ScreenGui = Instance.new("ScreenGui")
-ScreenGui.Name = "FelpsMenu"
+ScreenGui.Name = "PhantomHub"
 ScreenGui.ResetOnSpawn = false
 ScreenGui.Parent = PlayerGui
 
@@ -564,7 +545,7 @@ local Shadow = Instance.new("ImageLabel")
 Shadow.Size = UDim2.new(1, 30, 1, 30)
 Shadow.Position = UDim2.new(0, -15, 0, -15)
 Shadow.BackgroundTransparency = 1
-Shadow.Image = "rbxassetid://1316045217"
+Shadow.Image = "rbxassetid://89528230598819"
 Shadow.ImageColor3 = Color3.fromRGB(0, 0, 0)
 Shadow.ImageTransparency = 0.5
 Shadow.ScaleType = Enum.ScaleType.Slice
@@ -590,13 +571,12 @@ SidebarCover.BackgroundColor3 = Color3.fromRGB(18, 18, 20)
 SidebarCover.BorderSizePixel = 0
 SidebarCover.Parent = Sidebar
 
-local Logo = Instance.new("TextLabel")
+-- Sidebar Logo (MESMO ID DO ÍCONE ACIMA!)
+local Logo = Instance.new("ImageLabel")
 Logo.Size = UDim2.new(1, 0, 0, 60)
-Logo.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
-Logo.Text = "F"
-Logo.TextColor3 = Color3.new(1, 1, 1)
-Logo.TextSize = 32
-Logo.Font = Enum.Font.GothamBold
+Logo.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
+Logo.Image = "rbxassetid://89528230598819" -- ← MUDE ESTE NÚMERO!
+Logo.ScaleType = Enum.ScaleType.Fit
 Logo.Parent = Sidebar
 
 local LogoCorner = Instance.new("UICorner")
@@ -606,7 +586,7 @@ LogoCorner.Parent = Logo
 local LogoCover = Instance.new("Frame")
 LogoCover.Size = UDim2.new(0, 10, 0, 10)
 LogoCover.Position = UDim2.new(1, -10, 1, -10)
-LogoCover.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+LogoCover.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
 LogoCover.BorderSizePixel = 0
 LogoCover.Parent = Logo
 
@@ -622,7 +602,7 @@ local Title = Instance.new("TextLabel")
 Title.Size = UDim2.new(0, 200, 1, 0)
 Title.Position = UDim2.new(0, 20, 0, 0)
 Title.BackgroundTransparency = 1
-Title.Text = "FELPS PREMIUM"
+Title.Text = "PHANTOM HUB"
 Title.TextColor3 = Color3.new(1, 1, 1)
 Title.TextSize = 18
 Title.Font = Enum.Font.GothamBold
@@ -663,7 +643,16 @@ DestroyCorner.CornerRadius = UDim.new(0, 6)
 DestroyCorner.Parent = DestroyBtn
 
 DestroyBtn.MouseButton1Click:Connect(function()
-    -- DESATIVAR TODAS AS FEATURES
+    -- Desativar Auto Heal primeiro
+    Config.AutoHeal = false
+    pcall(DisableAutoHeal)
+    
+    -- Parar main loop
+    pcall(function()
+        RunService:UnbindFromRenderStep("FelpsUpdate")
+    end)
+    
+    -- Desativar todas as configs
     Config.AimbotEnabled = false
     Config.TeamCheck = false
     Config.ESPEnabled = false
@@ -675,43 +664,62 @@ DestroyBtn.MouseButton1Click:Connect(function()
     Config.ESPSkeleton = false
     Config.HitboxEnabled = false
     Config.TPEnabled = false
-    Config.AutoHeal = false -- REMOVER ESTA LINHA quando disser felps22
-    
-    -- REMOVER quando disser felps22
-    -- Desconectar Auto Heal
-    DisableAutoHeal()
-    -- FIM - remover
     
     -- Restaurar hitboxes
     for h, originalSize in pairs(OriginalSizes) do
-        if h and h.Parent then
-            h.Size = originalSize
-            h.Transparency = 0
-            h.CanCollide = true
-        end
+        pcall(function()
+            if h and h.Parent then
+                h.Size = originalSize
+                h.Transparency = 0
+                h.CanCollide = true
+            end
+        end)
     end
-    OriginalSizes = {}
     
     -- Remover FOV Circle
-    FOVCircle.Visible = false
-    FOVCircle:Remove()
+    pcall(function()
+        if FOVCircle then
+            FOVCircle.Visible = false
+            FOVCircle:Remove()
+        end
+    end)
     
     -- Remover ESP
     for _, v in pairs(PlayerVisuals) do 
         for _, d in pairs(v) do 
-            d.Visible = false
-            d:Remove() 
+            pcall(function()
+                d.Visible = false
+                d:Remove()
+            end)
         end
     end
-    PlayerVisuals = {}
     
-    -- Aguardar um frame para garantir que tudo foi desativado
-    wait(0.1)
+    print("☠️ Phantom Hub closing...")
     
-    -- Destruir GUI
-    ScreenGui:Destroy()
-    
-    print("Menu fechado - todas as funcionalidades desativadas!")
+    -- DESTRUIR TUDO IMEDIATAMENTE (sem wait)
+    spawn(function()
+        -- Destruir ScreenGui principal
+        pcall(function()
+            ScreenGui:Destroy()
+        end)
+        
+        -- Destruir KeyScreenGui
+        pcall(function()
+            KeyScreenGui:Destroy()
+        end)
+        
+        -- Limpeza extra - remover qualquer GUI relacionado
+        task.wait(0.05)
+        pcall(function()
+            for _, gui in pairs(game:GetService("Players").LocalPlayer.PlayerGui:GetChildren()) do
+                if gui.Name == "PhantomHub" or gui.Name == "PhantomKeySystem" or gui.Name == "FelpsMenu" then
+                    gui:Destroy()
+                end
+            end
+        end)
+        
+        print("✅ Phantom Hub completely destroyed!")
+    end)
 end)
 
 -- Content
@@ -765,7 +773,7 @@ local function Section(name, x, y, w, h)
     local d = Instance.new("Frame")
     d.Size = UDim2.new(1, 0, 0, 1)
     d.Position = UDim2.new(0, 0, 0, 35)
-    d.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+    d.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
     d.BorderSizePixel = 0
     d.Parent = s
     
@@ -816,7 +824,7 @@ local function Toggle(p, n, k, y)
         Config[k] = not Config[k]
         
         if Config[k] then
-            TweenService:Create(sw, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 50, 100)}):Play()
+            TweenService:Create(sw, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(130, 50, 200)}):Play()
             TweenService:Create(dot, TweenInfo.new(0.2), {Position = UDim2.new(1, -18, 0.5, -8)}):Play()
         else
             TweenService:Create(sw, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 60, 63)}):Play()
@@ -853,7 +861,7 @@ local function Slider(p, n, k, min, max, y)
     v.Position = UDim2.new(1, -40, 0, 0)
     v.BackgroundTransparency = 1
     v.Text = tostring(displayValue)
-    v.TextColor3 = Color3.fromRGB(255, 50, 100)
+    v.TextColor3 = Color3.fromRGB(130, 50, 200)
     v.TextSize = 11
     v.Font = Enum.Font.GothamBold
     v.TextXAlignment = Enum.TextXAlignment.Right
@@ -869,7 +877,7 @@ local function Slider(p, n, k, min, max, y)
     local fillPct = (displayValue - min) / (max - min)
     local fill = Instance.new("Frame")
     fill.Size = UDim2.new(fillPct, 0, 1, 0)
-    fill.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+    fill.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
     fill.BorderSizePixel = 0
     fill.Parent = bar
     
@@ -934,7 +942,7 @@ Toggle(s3, "Tracers", "ESPTracers", 245)
 Toggle(s3, "Skeleton", "ESPSkeleton", 285)
 
 -- TELEPORT Section (movida para não sobrepor)
-local s4 = Section("TELEPORT", 225, 110, 215, 310)
+local s4 = Section("TELEPORT", 225, 110, 215, 240)
 
 -- TP System UI
 local tpLabel = Instance.new("TextLabel")
@@ -975,7 +983,7 @@ dropdownCorner.Parent = playerDropdown
 local refreshBtn = Instance.new("TextButton")
 refreshBtn.Size = UDim2.new(0, 35, 0, 35)
 refreshBtn.Position = UDim2.new(1, -40, 0, 0)
-refreshBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+refreshBtn.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
 refreshBtn.Text = "🔄"
 refreshBtn.TextColor3 = Color3.new(1, 1, 1)
 refreshBtn.TextSize = 16
@@ -993,7 +1001,7 @@ playerList.Size = UDim2.new(0, 170, 0, 120)
 playerList.Position = UDim2.new(0, 235, 0, 215) -- Posição absoluta no Content
 playerList.BackgroundColor3 = Color3.fromRGB(30, 30, 33)
 playerList.BorderSizePixel = 1
-playerList.BorderColor3 = Color3.fromRGB(255, 50, 100)
+playerList.BorderColor3 = Color3.fromRGB(130, 50, 200)
 playerList.ScrollBarThickness = 4
 playerList.Visible = false
 playerList.ZIndex = 100
@@ -1038,7 +1046,7 @@ local function updatePlayerList()
             
             -- Hover effect
             playerBtn.MouseEnter:Connect(function()
-                playerBtn.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+                playerBtn.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
             end)
             
             playerBtn.MouseLeave:Connect(function()
@@ -1096,7 +1104,7 @@ end)
 local tpButton = Instance.new("TextButton")
 tpButton.Size = UDim2.new(1, -20, 0, 35)
 tpButton.Position = UDim2.new(0, 10, 0, 115)
-tpButton.BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+tpButton.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
 tpButton.Text = "TELEPORT NOW"
 tpButton.TextColor3 = Color3.new(1, 1, 1)
 tpButton.TextSize = 12
@@ -1156,7 +1164,7 @@ tpButton.MouseButton1Click:Connect(function()
             local myRoot = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
             
             if targetRoot and myRoot then
-                myRoot.CFrame = targetRoot.CFrame * CFrame.new(0, 0, 3)
+                myRoot.CFrame = targetRoot.CFrame * CFrame.new(0, 0, TPDistance)
                 
                 -- Feedback visual
                 TweenService:Create(tpButton, TweenInfo.new(0.1), {
@@ -1166,7 +1174,7 @@ tpButton.MouseButton1Click:Connect(function()
                 wait(0.1)
                 
                 TweenService:Create(tpButton, TweenInfo.new(0.1), {
-                    BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+                    BackgroundColor3 = Color3.fromRGB(130, 50, 200)
                 }):Play()
             end
         end
@@ -1179,7 +1187,7 @@ tpButton.MouseButton1Click:Connect(function()
         wait(0.2)
         
         TweenService:Create(tpButton, TweenInfo.new(0.1), {
-            BackgroundColor3 = Color3.fromRGB(255, 50, 100)
+            BackgroundColor3 = Color3.fromRGB(130, 50, 200)
         }):Play()
     end
 end)
@@ -1189,7 +1197,7 @@ tpToggle.MouseButton1Click:Connect(function()
     Config.TPEnabled = not Config.TPEnabled
     
     if Config.TPEnabled then
-        TweenService:Create(tpToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(255, 50, 100)}):Play()
+        TweenService:Create(tpToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(130, 50, 200)}):Play()
         TweenService:Create(toggleDot, TweenInfo.new(0.2), {Position = UDim2.new(1, -18, 0.5, -8)}):Play()
     else
         TweenService:Create(tpToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 60, 63)}):Play()
@@ -1197,139 +1205,139 @@ tpToggle.MouseButton1Click:Connect(function()
     end
 end)
 
--- RECUPERAR VIDA CHEIA (SEM RESET)
--- REMOVER QUANDO USUÁRIO DISSER: felps22
-local healButton = Instance.new("TextButton")
-healButton.Size = UDim2.new(1, -20, 0, 35)
-healButton.Position = UDim2.new(0, 10, 0, 210)
-healButton.BackgroundColor3 = Color3.fromRGB(50, 200, 100)
-healButton.Text = "💚 HEAL NOW"
-healButton.TextColor3 = Color3.new(1, 1, 1)
-healButton.TextSize = 12
-healButton.Font = Enum.Font.GothamBold
-healButton.Parent = s4
+-- TP Distance Slider
+local TPDistance = 3 -- Distância padrão
 
-local healBtnCorner = Instance.new("UICorner")
-healBtnCorner.CornerRadius = UDim.new(0, 6)
-healBtnCorner.Parent = healButton
+local distSliderFrame = Instance.new("Frame")
+distSliderFrame.Size = UDim2.new(1, -20, 0, 45)
+distSliderFrame.Position = UDim2.new(0, 10, 0, 205)
+distSliderFrame.BackgroundTransparency = 1
+distSliderFrame.Parent = s4
 
--- Sistema de cura instantânea
-healButton.MouseButton1Click:Connect(function()
-    if LocalPlayer.Character then
-        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+local distLabel = Instance.new("TextLabel")
+distLabel.Size = UDim2.new(1, -50, 0, 18)
+distLabel.BackgroundTransparency = 1
+distLabel.Text = "TP Distance"
+distLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+distLabel.TextSize = 10
+distLabel.Font = Enum.Font.Gotham
+distLabel.TextXAlignment = Enum.TextXAlignment.Left
+distLabel.Parent = distSliderFrame
+
+local distValue = Instance.new("TextLabel")
+distValue.Size = UDim2.new(0, 35, 0, 18)
+distValue.Position = UDim2.new(1, -35, 0, 0)
+distValue.BackgroundTransparency = 1
+distValue.Text = "3"
+distValue.TextColor3 = Color3.fromRGB(130, 50, 200)
+distValue.TextSize = 10
+distValue.Font = Enum.Font.GothamBold
+distValue.TextXAlignment = Enum.TextXAlignment.Right
+distValue.Parent = distSliderFrame
+
+local distBar = Instance.new("Frame")
+distBar.Size = UDim2.new(1, 0, 0, 4)
+distBar.Position = UDim2.new(0, 0, 0, 27)
+distBar.BackgroundColor3 = Color3.fromRGB(45, 45, 48)
+distBar.BorderSizePixel = 0
+distBar.Parent = distSliderFrame
+
+local distFill = Instance.new("Frame")
+distFill.Size = UDim2.new((3-1)/(20-1), 0, 1, 0)
+distFill.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
+distFill.BorderSizePixel = 0
+distFill.Parent = distBar
+
+local distBtn = Instance.new("TextButton")
+distBtn.Size = UDim2.new(1, 0, 1, 0)
+distBtn.BackgroundTransparency = 1
+distBtn.Text = ""
+distBtn.Parent = distBar
+
+local distDrag = false
+distBtn.MouseButton1Down:Connect(function() distDrag = true end)
+UserInputService.InputEnded:Connect(function(i) 
+    if i.UserInputType == Enum.UserInputType.MouseButton1 then 
+        distDrag = false 
+    end 
+end)
+
+RunService.RenderStepped:Connect(function()
+    if distDrag then
+        local m = UserInputService:GetMouseLocation()
+        local r = math.clamp(m.X - distBar.AbsolutePosition.X, 0, distBar.AbsoluteSize.X)
+        local pct = r / distBar.AbsoluteSize.X
+        local val = math.floor(1 + (20 - 1) * pct)
         
-        if humanoid then
-            -- Salvar vida atual
-            local oldHealth = humanoid.Health
-            
-            -- Restaurar vida para 100% MÚLTIPLAS VEZES (força o servidor aceitar)
-            for i = 1, 5 do
-                humanoid.Health = humanoid.MaxHealth
-                wait(0.05)
-            end
-            
-            -- Feedback visual (verde brilhante)
-            TweenService:Create(healButton, TweenInfo.new(0.1), {
-                BackgroundColor3 = Color3.fromRGB(100, 255, 150)
-            }):Play()
-            
-            wait(0.2)
-            
-            TweenService:Create(healButton, TweenInfo.new(0.2), {
-                BackgroundColor3 = Color3.fromRGB(50, 200, 100)
-            }):Play()
-            
-            -- Notificação
-            game.StarterGui:SetCore("SendNotification", {
-                Title = "💚 HEALED";
-                Text = string.format("HP: %.0f → %.0f", oldHealth, humanoid.MaxHealth);
-                Duration = 2;
-            })
-        end
+        TPDistance = val
+        distValue.Text = tostring(val)
+        distFill.Size = UDim2.new(pct, 0, 1, 0)
     end
 end)
 
--- AUTO HEAL (CURA CONTÍNUA)
-local autoHealContainer = Instance.new("Frame")
-autoHealContainer.Size = UDim2.new(1, -20, 0, 35)
-autoHealContainer.Position = UDim2.new(0, 10, 0, 255)
-autoHealContainer.BackgroundTransparency = 1
-autoHealContainer.Parent = s4
+-- Quick TP Buttons
+local quickTPLabel = Instance.new("TextLabel")
+quickTPLabel.Size = UDim2.new(1, -20, 0, 15)
+quickTPLabel.Position = UDim2.new(0, 10, 0, 255)
+quickTPLabel.BackgroundTransparency = 1
+quickTPLabel.Text = "Quick TP:"
+quickTPLabel.TextColor3 = Color3.fromRGB(150, 150, 150)
+quickTPLabel.TextSize = 9
+quickTPLabel.Font = Enum.Font.Gotham
+quickTPLabel.TextXAlignment = Enum.TextXAlignment.Left
+quickTPLabel.Parent = s4
 
-local autoHealLabel = Instance.new("TextLabel")
-autoHealLabel.Size = UDim2.new(1, -50, 1, 0)
-autoHealLabel.BackgroundTransparency = 1
-autoHealLabel.Text = "Auto Heal (Keep 100%)"
-autoHealLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
-autoHealLabel.TextSize = 11
-autoHealLabel.Font = Enum.Font.Gotham
-autoHealLabel.TextXAlignment = Enum.TextXAlignment.Left
-autoHealLabel.Parent = autoHealContainer
+-- Container for 3 buttons
+local quickBtnsContainer = Instance.new("Frame")
+quickBtnsContainer.Size = UDim2.new(1, -20, 0, 25)
+quickBtnsContainer.Position = UDim2.new(0, 10, 0, 270)
+quickBtnsContainer.BackgroundTransparency = 1
+quickBtnsContainer.Parent = s4
 
--- Toggle Auto Heal
-local autoHealToggle = Instance.new("TextButton")
-autoHealToggle.Size = UDim2.new(0, 40, 0, 20)
-autoHealToggle.Position = UDim2.new(1, -45, 0.5, -10)
-autoHealToggle.BackgroundColor3 = Color3.fromRGB(60, 60, 63)
-autoHealToggle.Text = ""
-autoHealToggle.Parent = autoHealContainer
-
-local autoHealCorner = Instance.new("UICorner")
-autoHealCorner.CornerRadius = UDim.new(1, 0)
-autoHealCorner.Parent = autoHealToggle
-
-local autoHealDot = Instance.new("Frame")
-autoHealDot.Size = UDim2.new(0, 16, 0, 16)
-autoHealDot.Position = UDim2.new(0, 2, 0.5, -8)
-autoHealDot.BackgroundColor3 = Color3.new(1, 1, 1)
-autoHealDot.BorderSizePixel = 0
-autoHealDot.Parent = autoHealToggle
-
-local autoHealDotCorner = Instance.new("UICorner")
-autoHealDotCorner.CornerRadius = UDim.new(1, 0)
-autoHealDotCorner.Parent = autoHealDot
-
--- Toggle Auto Heal
-autoHealToggle.MouseButton1Click:Connect(function()
-    Config.AutoHeal = not Config.AutoHeal
+local function createQuickTPBtn(text, pos, offsetFunc)
+    local btn = Instance.new("TextButton")
+    btn.Size = UDim2.new(0.32, -2, 1, 0)
+    btn.Position = pos
+    btn.BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+    btn.Text = text
+    btn.TextColor3 = Color3.new(1, 1, 1)
+    btn.TextSize = 9
+    btn.Font = Enum.Font.GothamBold
+    btn.Parent = quickBtnsContainer
     
-    if Config.AutoHeal then
-        -- Ativar Auto Heal
-        EnableAutoHeal()
-        
-        TweenService:Create(autoHealToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 200, 100)}):Play()
-        TweenService:Create(autoHealDot, TweenInfo.new(0.2), {Position = UDim2.new(1, -18, 0.5, -8)}):Play()
-        
-        -- Cura imediata ao ativar
-        if LocalPlayer.Character then
-            local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
-            if humanoid then
-                humanoid.Health = humanoid.MaxHealth
+    local corner = Instance.new("UICorner")
+    corner.CornerRadius = UDim.new(0, 4)
+    corner.Parent = btn
+    
+    btn.MouseButton1Click:Connect(function()
+        if TPTarget then
+            local targetPlayer = Players:FindFirstChild(TPTarget)
+            if targetPlayer and targetPlayer.Character and LocalPlayer.Character then
+                local targetRoot = targetPlayer.Character:FindFirstChild("HumanoidRootPart")
+                local myRoot = LocalPlayer.Character:FindFirstChild("HumanoidRootPart")
+                
+                if targetRoot and myRoot then
+                    myRoot.CFrame = targetRoot.CFrame * offsetFunc() -- Use função para pegar valor atual
+                    
+                    TweenService:Create(btn, TweenInfo.new(0.1), {
+                        BackgroundColor3 = Color3.fromRGB(130, 50, 200)
+                    }):Play()
+                    wait(0.15)
+                    TweenService:Create(btn, TweenInfo.new(0.1), {
+                        BackgroundColor3 = Color3.fromRGB(50, 50, 55)
+                    }):Play()
+                end
             end
         end
-        
-        -- Notificação
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "💚 AUTO HEAL ON";
-            Text = "HP will stay at 100%";
-            Duration = 2;
-        })
-    else
-        -- Desativar Auto Heal
-        DisableAutoHeal()
-        
-        TweenService:Create(autoHealToggle, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 60, 63)}):Play()
-        TweenService:Create(autoHealDot, TweenInfo.new(0.2), {Position = UDim2.new(0, 2, 0.5, -8)}):Play()
-        
-        -- Notificação
-        game.StarterGui:SetCore("SendNotification", {
-            Title = "💚 AUTO HEAL OFF";
-            Text = "Manual heal only";
-            Duration = 2;
-        })
-    end
-end)
--- FIM DO CÓDIGO DE HEAL - REMOVER ATÉ AQUI QUANDO DISSER felps22
+    end)
+    
+    return btn
+end
+
+createQuickTPBtn("BEHIND", UDim2.new(0, 0, 0, 0), function() return CFrame.new(0, 0, TPDistance) end)
+createQuickTPBtn("FRONT", UDim2.new(0.34, 0, 0, 0), function() return CFrame.new(0, 0, -TPDistance) end)
+createQuickTPBtn("ABOVE", UDim2.new(0.68, 0, 0, 0), function() return CFrame.new(0, TPDistance, 0) end)
+
 
 -- Inicializar lista
 updatePlayerList()
@@ -1337,6 +1345,7 @@ updatePlayerList()
 -- Fechar dropdown ao clicar fora
 UserInputService.InputBegan:Connect(function(input)
     if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        -- Fechar dropdown de TP
         if playerList.Visible then
             local mousePos = UserInputService:GetMouseLocation()
             local listPos = playerList.AbsolutePosition
@@ -1358,6 +1367,151 @@ UserInputService.InputBegan:Connect(function(input)
     end
 end)
 
+-- AUTO HEAL SECTION
+local s5 = Section("AUTO HEAL", 5, 280, 215, 145)
+
+-- Auto Heal Config
+Config.AutoHeal = false
+local autoHealConnection = nil
+
+-- Função para ativar Auto Heal
+local function EnableAutoHeal()
+    if LocalPlayer.Character then
+        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid and not autoHealConnection then
+            autoHealConnection = humanoid.HealthChanged:Connect(function(health)
+                if Config.AutoHeal and health < humanoid.MaxHealth then
+                    humanoid.Health = humanoid.MaxHealth
+                end
+            end)
+        end
+    end
+end
+
+-- Função para desativar Auto Heal
+local function DisableAutoHeal()
+    if autoHealConnection then
+        autoHealConnection:Disconnect()
+        autoHealConnection = nil
+    end
+end
+
+-- Reconectar Auto Heal quando morrer
+LocalPlayer.CharacterAdded:Connect(function()
+    wait(0.5)
+    DisableAutoHeal()
+    if Config.AutoHeal then
+        EnableAutoHeal()
+    end
+end)
+
+-- Custom Auto Heal Toggle with Enable/Disable functions
+local autoHealToggleFrame = Instance.new("Frame")
+autoHealToggleFrame.Size = UDim2.new(1, -20, 0, 35)
+autoHealToggleFrame.Position = UDim2.new(0, 10, 0, 45)
+autoHealToggleFrame.BackgroundTransparency = 1
+autoHealToggleFrame.Parent = s5
+
+local autoHealLabel = Instance.new("TextLabel")
+autoHealLabel.Size = UDim2.new(1, -60, 1, 0)
+autoHealLabel.BackgroundTransparency = 1
+autoHealLabel.Text = "Auto Heal Enabled"
+autoHealLabel.TextColor3 = Color3.fromRGB(200, 200, 200)
+autoHealLabel.TextSize = 12
+autoHealLabel.Font = Enum.Font.Gotham
+autoHealLabel.TextXAlignment = Enum.TextXAlignment.Left
+autoHealLabel.Parent = autoHealToggleFrame
+
+local autoHealSwitch = Instance.new("TextButton")
+autoHealSwitch.Size = UDim2.new(0, 40, 0, 20)
+autoHealSwitch.Position = UDim2.new(1, -45, 0.5, -10)
+autoHealSwitch.BackgroundColor3 = Color3.fromRGB(60, 60, 63)
+autoHealSwitch.Text = ""
+autoHealSwitch.Parent = autoHealToggleFrame
+
+local autoHealSwitchCorner = Instance.new("UICorner")
+autoHealSwitchCorner.CornerRadius = UDim.new(1, 0)
+autoHealSwitchCorner.Parent = autoHealSwitch
+
+local autoHealDot = Instance.new("Frame")
+autoHealDot.Size = UDim2.new(0, 16, 0, 16)
+autoHealDot.Position = UDim2.new(0, 2, 0.5, -8)
+autoHealDot.BackgroundColor3 = Color3.new(1, 1, 1)
+autoHealDot.BorderSizePixel = 0
+autoHealDot.Parent = autoHealSwitch
+
+local autoHealDotCorner = Instance.new("UICorner")
+autoHealDotCorner.CornerRadius = UDim.new(1, 0)
+autoHealDotCorner.Parent = autoHealDot
+
+autoHealSwitch.MouseButton1Click:Connect(function()
+    Config.AutoHeal = not Config.AutoHeal
+    
+    if Config.AutoHeal then
+        EnableAutoHeal()
+        TweenService:Create(autoHealSwitch, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(130, 50, 200)}):Play()
+        TweenService:Create(autoHealDot, TweenInfo.new(0.2), {Position = UDim2.new(1, -18, 0.5, -8)}):Play()
+        
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "💜 AUTO HEAL ON";
+            Text = "HP stays at 100%";
+            Duration = 2;
+        })
+    else
+        DisableAutoHeal()
+        TweenService:Create(autoHealSwitch, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 60, 63)}):Play()
+        TweenService:Create(autoHealDot, TweenInfo.new(0.2), {Position = UDim2.new(0, 2, 0.5, -8)}):Play()
+        
+        game.StarterGui:SetCore("SendNotification", {
+            Title = "💜 AUTO HEAL OFF";
+            Text = "Manual heal only";
+            Duration = 2;
+        })
+    end
+end)
+
+-- Botão Heal Instantâneo
+local healInstantButton = Instance.new("TextButton")
+healInstantButton.Size = UDim2.new(1, -20, 0, 35)
+healInstantButton.Position = UDim2.new(0, 10, 0, 90)
+healInstantButton.BackgroundColor3 = Color3.fromRGB(130, 50, 200)
+healInstantButton.Text = "💜 HEAL NOW"
+healInstantButton.TextColor3 = Color3.new(1, 1, 1)
+healInstantButton.TextSize = 12
+healInstantButton.Font = Enum.Font.GothamBold
+healInstantButton.Parent = s5
+
+local healBtnCorner = Instance.new("UICorner")
+healBtnCorner.CornerRadius = UDim.new(0, 6)
+healBtnCorner.Parent = healInstantButton
+
+healInstantButton.MouseButton1Click:Connect(function()
+    if LocalPlayer.Character then
+        local humanoid = LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if humanoid then
+            local oldHealth = humanoid.Health
+            for i = 1, 5 do
+                humanoid.Health = humanoid.MaxHealth
+                wait(0.05)
+            end
+            
+            TweenService:Create(healInstantButton, TweenInfo.new(0.1), {
+                BackgroundColor3 = Color3.fromRGB(160, 80, 240)
+            }):Play()
+            wait(0.2)
+            TweenService:Create(healInstantButton, TweenInfo.new(0.2), {
+                BackgroundColor3 = Color3.fromRGB(130, 50, 200)
+            }):Play()
+            
+            game.StarterGui:SetCore("SendNotification", {
+                Title = "💜 HEALED";
+                Text = string.format("HP: %.0f → %.0f", oldHealth, humanoid.MaxHealth);
+                Duration = 2;
+            })
+        end
+    end
+end)
+
 local info = Instance.new("TextLabel")
 info.Size = UDim2.new(0, 200, 0, 30)
 info.Position = UDim2.new(0, 450, 1, -35)
@@ -1375,11 +1529,11 @@ UserInputService.InputBegan:Connect(function(i, g)
 end)
 
 game.StarterGui:SetCore("SendNotification", {
-    Title = "✅ FELPS";
+    Title = "☠️ PHANTOM HUB";
     Text = "Loaded! Press K";
     Duration = 5;
 })
 
 end
 
-print("Script loaded! Key: FELPS2025")
+print("Phantom Hub loaded! Key: Secreta")
