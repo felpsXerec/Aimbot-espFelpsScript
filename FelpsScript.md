@@ -19,7 +19,7 @@ print("PHANTOM HUB - LOADING...")
 print("==========================================")
 
 -- KEY SYSTEM
-local CORRECT_KEY = "PhantomFelpVip225566"
+local CORRECT_KEY = "HFDEGH-FJHKWA-32GHJD"
 
 -- CONFIGURAÇÕES
 local Config = {
