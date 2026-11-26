@@ -13,7 +13,7 @@ local Stats = game:GetService("Stats")
 local LP = Players.LocalPlayer
 local Camera = Workspace.CurrentCamera
 local GuiParent = (gethui and gethui()) or CoreGui
-local KEY = "FLAD"
+local KEY = "HFDEGH-FJHKWA-32GHJD"
 
 pcall(function()
     local old = GuiParent:FindFirstChild("BHHubV3")
@@ -1866,4 +1866,4 @@ KeyBtn.MouseButton1Click:Connect(CheckKey)
 KeyBox.FocusLost:Connect(function(enter) if enter then CheckKey() end end)
 
 RefreshPreview()
-print("BH Hub v3 carregado | Key: HFDEGH-FJHKWA-32GHJD | tecla do menu: " .. MenuKey.Name .. " (configuravel em Configuracoes)")
+print("BH Hub v3 carregado | Key: ??? | tecla do menu: " .. MenuKey.Name .. " (configuravel em Configuracoes)")
